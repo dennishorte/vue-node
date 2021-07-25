@@ -5,14 +5,14 @@ const zip = require('gulp-zip');
 const log = require('fancy-log');
 const webpack_stream = require('webpack-stream');
 const webpack_config = require('./webpack.config.js');
-var exec = require('child_process').exec;
+const exec = require('child_process').exec;
 
 const paths = {
   prod_build: '../prod-build',
   server_file_name: 'server.bundle.js',
-  react_src: '../app/build/**/*',
-  react_dist: '../prod-build/app/build',
-  zipped_file_name: 'react-nodejs.zip'
+  vue_src: '../app/build/**/*',
+  vue_dist: '../prod-build/app/build',
+  zipped_file_name: 'vue-nodejs.zip'
 };
 
 function clean()  {
@@ -32,8 +32,8 @@ function createProdBuildFolder() {
   return Promise.resolve('the value is ignored');
 }
 
-function buildReactCodeTask(cb) {
-  log('building React code into the directory')
+function buildVueCodeTask(cb) {
+  log('building Vue code into the directory')
   return exec('cd ../app && npm run build', function (err, stdout, stderr) {
     log(stdout);
     log(stderr);
@@ -41,10 +41,10 @@ function buildReactCodeTask(cb) {
   })
 }
 
-function copyReactCodeTask() {
-  log('copying React code into the directory')
-  return src(`${paths.react_src}`)
-        .pipe(dest(`${paths.react_dist}`));
+function copyVueCodeTask() {
+  log('copying Vue code into the directory')
+  return src(`${paths.vue_src}`)
+        .pipe(dest(`${paths.vue_dist}`));
 }
 
 function copyNodeJSCodeTask() {
@@ -63,7 +63,7 @@ function zippingTask() {
 exports.default = series(
   clean,
   createProdBuildFolder,
-  buildReactCodeTask,
-  parallel(copyReactCodeTask, copyNodeJSCodeTask),
+  buildVueCodeTask,
+  parallel(copyVueCodeTask, copyNodeJSCodeTask),
   zippingTask
 );
