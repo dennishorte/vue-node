@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "example project react with nodejs",
+  "description": "example project vue with nodejs",
   "main": "server.js",
   "scripts": {
     "start": "node server.bundle.js",
@@ -12,12 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/bbachi/vuejs-nginx-docker.git"
   },
-  "author": "Bhargav Bachina",
+  "author": "Dennis Horte",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bbachi/vuejs-nginx-docker/issues"
-  },
-  "homepage": "https://github.com/bbachi/vuejs-nginx-docker#readme",
   "dependencies": {
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.4",

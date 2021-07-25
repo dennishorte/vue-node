@@ -9,4 +9,4 @@ new Vue({
   render: h => h(App),
 }).$mount('#app')
 
-Vue.use(BootstrapVue);
+Vue.use(BootstrapVue)

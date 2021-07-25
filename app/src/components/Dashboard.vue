@@ -25,15 +25,15 @@ import Users from './Users.vue'
 import { getAllUsers, createUser } from '../services/UserService'
 
 export default {
-  name: 'Dashboard',
-  components: {
-    Header,
-    CreateUser,
-    DisplayBoard,
-    Users
-  },
-  data() {
-      return {
+    name: 'Dashboard',
+    components: {
+        Header,
+        CreateUser,
+        DisplayBoard,
+        Users
+    },
+    data() {
+        return {
           users: [],
           numberOfUsers: 0
       }

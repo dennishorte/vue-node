@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   entry: './server.js',
@@ -8,4 +8,4 @@ module.exports = {
     path: path.resolve(__dirname, '.'),
     filename: 'server.bundle.js'
   }
-};
+}
