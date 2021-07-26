@@ -12,12 +12,12 @@
 
 <script>
 export default {
-    name: 'DisplayBoard',
-    props: ['numberOfUsers'],
-    methods: {
-        getAllUsers() {
-            this.$emit('getAllUsers')
-        }
+  name: 'DisplayBoard',
+  props: ['numberOfUsers'],
+  methods: {
+    getAllUsers() {
+      this.$emit('getAllUsers')
     }
+  }
 }
 </script>

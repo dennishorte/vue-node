@@ -1,20 +1,20 @@
 <template>
-  <div class="hello">
-    <Header />
-    <div class="container mrgnbtm">
-          <div class="row">
-            <div class="col-md-8">
-                <CreateUser @createUser="userCreate($event)" />
-            </div>
-            <div class="col-md-4">
-                <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
-          </div>
-    </div>
-    <div class="row mrgnbtm">
-        <Users v-if="users.length > 0" :users="users" />
+<div class="hello">
+  <Header />
+  <div class="container mrgnbtm">
+    <div class="row">
+      <div class="col-md-8">
+        <CreateUser @createUser="userCreate($event)" />
+      </div>
+      <div class="col-md-4">
+        <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
+      </div>
     </div>
   </div>
+  <div class="row mrgnbtm">
+    <Users v-if="users.length > 0" :users="users" />
+  </div>
+</div>
 </template>
 
 <script>
@@ -25,18 +25,18 @@ import Users from './Users.vue'
 import { getAllUsers, createUser } from '../services/UserService'
 
 export default {
-    name: 'Dashboard',
-    components: {
-        Header,
-        CreateUser,
-        DisplayBoard,
-        Users
-    },
-    data() {
-        return {
-          users: [],
-          numberOfUsers: 0
-      }
+  name: 'Dashboard',
+  components: {
+    Header,
+    CreateUser,
+    DisplayBoard,
+    Users
+  },
+  data() {
+    return {
+      users: [],
+      numberOfUsers: 0
+    }
   },
   methods: {
     getAllUsers() {

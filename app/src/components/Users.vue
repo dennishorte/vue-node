@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    name: 'Users',
-    props: ['users']
+  name: 'Users',
+  props: ['users']
 }
 </script>

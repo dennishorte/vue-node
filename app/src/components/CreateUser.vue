@@ -29,30 +29,30 @@
 
 <script>
 export default {
-    name: 'CreateUser',
-    data() {
-        return {
-            firstName: '',
-            lastName: '',
-            email: ''
-        }
-    },
-    methods: {
-        createUser() {
-            console.log(this.firstName)
-            const payload = {
-                firstName: this.firstName,
-                lastName: this.lastName,
-                email: this.email
-            }
-            this.$emit('createUser', payload)
-            this.clearForm();
-        },
-        clearForm() {
-            this.firstName = "";
-            this.lastName = "";
-          this.email = "";
+  name: 'CreateUser',
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+      email: ''
+    }
+  },
+  methods: {
+    createUser() {
+      console.log(this.firstName)
+      const payload = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email
       }
+      this.$emit('createUser', payload)
+      this.clearForm();
+    },
+    clearForm() {
+      this.firstName = "";
+      this.lastName = "";
+      this.email = "";
+    }
   }
 }
 </script>
