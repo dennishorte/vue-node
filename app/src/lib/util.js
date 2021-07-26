@@ -8,7 +8,6 @@ util.foo = function() {
 
 export default {
   install: function(Vue) {
-    console.log('installing')
     Object.defineProperty(Vue.prototype, '$util', { value: util })
   },
 }

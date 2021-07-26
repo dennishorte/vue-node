@@ -1,32 +1,70 @@
+const bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
-const randomId = require('random-id')
-const app = express()
-const bodyParser = require("body-parser")
+const passport = require('passport')
+
+
 const port = 3000
 
-// place holder for the data
-const users = []
+
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt
+
+const db = require('./db.js')
+
+const app = express()
+
+
+// Configure the Bearer strategy for use by Passport.
+//
+// The Bearer strategy requires a `verify` function which receives the
+// credentials (`token`) contained in the request.  The function must invoke
+// `cb` with a user object, which will be set at `req.user` in route handlers
+// after authentication.
+/* passport.use(new JwtStrategy(
+ *   function(token, cb) {
+ *     db.user.findByToken(token, function(err, user) {
+ *       if (err) { return cb(err); }
+ *       if (!user) { return cb(null, false); }
+ *       return cb(null, user);
+ *     });
+ * }));
+ *  */
+
+////////////////////////////////////////////////////////////
+// Middleware
 
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../app/dist')))
 
+
+////////////////////////////////////////////////////////////
+// Routes
+
 app.get('/api/users', (req, res) => {
-  console.log('api/users called!!!!!!!')
-  res.json(users)
+  console.log('/api/users')
+  db.user.all().then(users => {
+    console.log(users)
+    res.json(users)
+  })
 })
+
 
 app.post('/api/user', (req, res) => {
+  console.log('/api/user')
   const user = req.body.user
-  user.id = randomId(10)
-  console.log('Adding user:::::', user)
-  users.push(user)
-  res.json("user addedd")
+  db.user.insert(user.name, user.email)
+    .then(() => res.json('insert successful'))
 })
 
-app.get('/', (req,res) => {
+
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../app/build/index.html'))
 })
+
+
+////////////////////////////////////////////////////////////
+// Initialize
 
 app.listen(port, () => {
     console.log(`Server listening on the port::${port}`)

@@ -47,7 +47,7 @@ export default {
       })
     },
     userCreate(data) {
-      console.log('data:::', data)
+      console.log('userCreate:', data)
       createUser(data).then(response => {
         console.log(response);
         this.getAllUsers();

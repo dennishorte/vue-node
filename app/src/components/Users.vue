@@ -5,17 +5,17 @@
     <thead>
       <tr>
         <th>User Id</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
+        <th>Name</th>
         <th>Email</th>
+        <th>Token</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in users" :key="item.id">
         <td>{{ item.id }}</td>
-        <td>{{ item.firstName }}</td>
-        <td>{{ item.lastName }}</td>
+        <td>{{ item.name }}</td>
         <td>{{ item.email }}</td>
+        <td>{{ item.token }}</td>
       </tr>
     </tbody>
   </table>
