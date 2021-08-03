@@ -3,7 +3,7 @@
   <Login
     v-if="auth_token === null"
     @login="login($event)" />
-  <!-- <Dashboard v-else /> -->
+  <Dashboard v-else />
 </div>
 </template>
 
@@ -11,7 +11,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-// import Dashboard from './components/Dashboard.vue'
+import Dashboard from './components/Dashboard.vue'
 import Login from './components/Login.vue'
 import UserService from './services/UserService'
 
@@ -23,7 +23,7 @@ export default {
     }
   },
   components: {
-    // Dashboard,
+    Dashboard,
     Login,
   },
   methods: {
