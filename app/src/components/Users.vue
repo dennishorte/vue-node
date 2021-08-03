@@ -6,7 +6,7 @@
       <tr>
         <th>User Id</th>
         <th>Name</th>
-        <th>Email</th>
+        <th>Slack</th>
         <th>Token</th>
       </tr>
     </thead>
@@ -14,7 +14,7 @@
       <tr v-for="item in users" :key="item.id">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
-        <td>{{ item.email }}</td>
+        <td>{{ item.slack }}</td>
         <td>{{ item.token }}</td>
       </tr>
     </tbody>

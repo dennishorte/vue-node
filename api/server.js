@@ -1,5 +1,8 @@
+require('dotenv').config()
+
 const bodyParser = require('body-parser')
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const path = require('path')
 const passport = require('passport')
 
@@ -21,15 +24,21 @@ const app = express()
 // credentials (`token`) contained in the request.  The function must invoke
 // `cb` with a user object, which will be set at `req.user` in route handlers
 // after authentication.
-/* passport.use(new JwtStrategy(
- *   function(token, cb) {
- *     db.user.findByToken(token, function(err, user) {
- *       if (err) { return cb(err); }
- *       if (!user) { return cb(null, false); }
- *       return cb(null, user);
- *     });
- * }));
- *  */
+var jwtOpts = {}
+jwtOpts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
+jwtOpts.secretOrKey = 'test_secret'
+passport.use(new JwtStrategy(
+  jwtOpts,
+  function(token, cb) {
+    db.user.findByToken(token)
+      .then((err, user) => {
+        if (err) { return cb(err) }
+        if (!user) { return cb(null, false) }
+        return cb(null, user)
+      })
+  }
+))
+
 
 ////////////////////////////////////////////////////////////
 // Middleware
@@ -41,21 +50,50 @@ app.use(express.static(path.join(__dirname, '../app/dist')))
 ////////////////////////////////////////////////////////////
 // Routes
 
+//  passport.authenticate('jwt', { session: false }),
+
+
 app.get('/api/users', (req, res) => {
-  console.log('/api/users')
   db.user.all().then(users => {
-    console.log(users)
     res.json(users)
   })
 })
 
 
-app.post('/api/user', (req, res) => {
-  console.log('/api/user')
-  const user = req.body.user
-  db.user.insert(user.name, user.email)
-    .then(() => res.json('insert successful'))
+app.post('/api/login', async (req, res, next) => {
+  const users = await db.user.all()
+
+  // If there are no users yet, this becomes the admin user.
+  if (users.length == 0) {
+    const user = await db.user.insert(
+      req.body.name,
+      req.body.password,
+      null,
+    )
+    res.json({ token: user.token })
+  }
+
+  // Otherwise, fetch the user and return its auth token, if the user has valid credentials.
+  else {
+    try {
+      const user = await db.user.checkPassword(req.body.name, req.body.password)
+      res.json({ token: user.token })
+    }
+    catch (err) {
+      res.json({ error: err })
+    }
+  }
 })
+
+
+app.post(
+  '/api/user',
+  (req, res) => {
+    const user = req.body.user
+    db.user.insert(user.name, user.password, user.slack)
+      .then(() => res.json('insert successful'))
+  }
+)
 
 
 app.get('/', (req, res) => {

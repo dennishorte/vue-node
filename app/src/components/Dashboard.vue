@@ -22,7 +22,7 @@ import Header from './Header.vue'
 import CreateUser from './CreateUser.vue'
 import DisplayBoard from './DisplayBoard.vue'
 import Users from './Users.vue'
-import { getAllUsers, createUser } from '../services/UserService'
+import UserService from '../services/UserService'
 
 export default {
   name: 'Dashboard',
@@ -40,22 +40,17 @@ export default {
   },
   methods: {
     getAllUsers() {
-      getAllUsers().then(response => {
-        console.log(response)
+      UserService.getAll().then(response => {
         this.users = response
         this.numberOfUsers = this.users.length
       })
     },
     userCreate(data) {
-      console.log('userCreate:', data)
-      createUser(data).then(response => {
-        console.log(response);
-        this.getAllUsers();
-      });
+      UserService.create(data).then(() => this.getAllUsers())
     }
   },
   mounted () {
-    this.getAllUsers();
+    this.getAllUsers()
   }
 }
 </script>

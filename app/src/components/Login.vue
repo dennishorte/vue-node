@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-7 mrgnbtm">
-      <h2>Create User</h2>
+      <h2>Login</h2>
       <form>
         <div class="row">
           <div class="form-group col-md-6">
@@ -12,17 +12,11 @@
         </div>
         <div class="row">
           <div class="form-group col-md-12">
-            <label>Slack</label>
-            <input type="text" class="form-control" v-model="slack" name="slack" id="slack" placeholder="Slack" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-12">
             <label>Password</label>
             <input type="password" class="form-control" v-model="password" name="password" id="password" placeholder="Password" />
           </div>
         </div>
-        <button type="button" @click='createUser()' class="btn btn-danger">Create</button>
+        <button type="button" @click='login()' class="btn btn-danger">Login</button>
       </form>
     </div>
   </div>
@@ -31,29 +25,21 @@
 
 <script>
 export default {
-  name: 'CreateUser',
+  name: 'Login',
   data() {
     return {
       name: '',
-      slack: '',
       password: '',
     }
   },
   methods: {
-    createUser() {
+    login() {
       const payload = {
         name: this.name,
-        slack: this.slack,
         password: this.password,
       }
-      this.$emit('createUser', payload)
-      this.clearForm()
+      this.$emit('login', payload)
     },
-    clearForm() {
-      this.name = ""
-      this.slack = ""
-      this.password = ""
-    }
   }
 }
 </script>
