@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import authConfig from '@/modules/auth/store'
+import authConfig from '@/modules/auth/store.js'
 
 
 Vue.use(Vuex)

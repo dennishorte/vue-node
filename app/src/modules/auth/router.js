@@ -1,5 +1,5 @@
-import Login from '../view/Login'
-import Logout from '../view/Logout'
+import Login from './view/Login'
+import Logout from './view/Logout'
 
 export default [
   {

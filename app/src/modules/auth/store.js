@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { AUTH_LOCAL_TOKEN, AUTH_LOCAL_USER } from '../consts'
+import { AUTH_LOCAL_TOKEN, AUTH_LOCAL_USER } from './consts'
 
 
 export default {

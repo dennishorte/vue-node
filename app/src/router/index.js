@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/components/Home'
-import authRoutes from '@/modules/auth/router'
-import authUtil from '@/modules/auth/util'
+import authRoutes from '@/modules/auth/router.js'
+import authUtil from '@/modules/auth/util.js'
 
 Vue.use(Router)
 
