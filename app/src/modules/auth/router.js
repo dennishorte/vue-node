@@ -1,5 +1,5 @@
+import store from '@/store'
 import Login from './view/Login'
-import Logout from './view/Logout'
 
 export default [
   {
@@ -11,7 +11,11 @@ export default [
   {
     path: '/logout',
     name: 'Logout',
-    title: 'Logout',
-    component: Logout,
+    component: {
+      beforeRouteEnter(to, from, next) {
+        store.dispatch("auth/logout")
+        next({ path: 'login' })
+      }
+    }
   },
 ]
