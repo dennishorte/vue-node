@@ -66,13 +66,11 @@ export default {
       })
     },
 
-    /* logout({ commit }) {
-     *   return new Promise(resolve => {
-     *     commit('logout')
-     *     localStorage.removeItem(AUTH_LOCAL_TOKEN)
-     *     delete axios.defaults.headers.common['Authorization']
-     *     resolve()
-     *   })
-     * }, */
+    logout({ commit }) {
+      return new Promise(resolve => {
+        commit('logout')
+        resolve()
+      })
+    },
   },
 }

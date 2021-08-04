@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { BootstrapVue } from 'bootstrap-vue'
 import Vue from 'vue'
 
@@ -12,9 +11,11 @@ import authUtil from '@/modules/auth/util'
 Vue.config.devtools = true
 Vue.config.productionTip = false
 
+authUtil.initialize()
 
-Object.defineProperty(Vue.prototype, 'axios', { value: axios })
-authUtil.initialize()  // Must be called after Axios is assigned to $http
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
 Vue.use(BootstrapVue)

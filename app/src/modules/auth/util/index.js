@@ -16,7 +16,6 @@ function canAccess(routeRecord) {
 
 /*
    If the user has a locally cached auth token, load it up.
-   Should be called after Axios is loaded into Vue.prototype.$http
  */
 function initialize() {
   const authToken = localStorage.getItem(AUTH_LOCAL_TOKEN)
