@@ -1,8 +1,5 @@
-import axios from 'axios'
 import store from '@/store'
-
-
-const AUTH_LOCAL_TOKEN = 'auth_token'
+import { AUTH_LOCAL_TOKEN, AUTH_LOCAL_USER } from '../consts'
 
 
 function canAccess(routeRecord) {
@@ -18,16 +15,15 @@ function canAccess(routeRecord) {
    If the user has a locally cached auth token, load it up.
  */
 function initialize() {
-  const authToken = localStorage.getItem(AUTH_LOCAL_TOKEN)
-  if (authToken) {
-    axios.defaults.headers.common['Authorization'] = authToken
+  const token = localStorage.getItem(AUTH_LOCAL_TOKEN)
+  const user = localStorage.getItem(AUTH_LOCAL_USER)
+  if (token && user) {
+    store.commit('auth/auth_success', token, user)
   }
 }
 
 
 export default {
-  AUTH_LOCAL_TOKEN,
-
   canAccess,
   initialize,
 }

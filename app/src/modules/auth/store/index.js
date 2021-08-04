@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { AUTH_LOCAL_TOKEN } from '../util'
+import { AUTH_LOCAL_TOKEN, AUTH_LOCAL_USER } from '../consts'
 
 
 export default {
@@ -31,6 +31,7 @@ export default {
       state.token = token
       state.user = user
       localStorage.setItem(AUTH_LOCAL_TOKEN, token)
+      localStorage.setItem(AUTH_LOCAL_USER, user)
       axios.defaults.headers.common['Authorization'] = token
     },
 
@@ -39,6 +40,7 @@ export default {
       state.token = ''
       state.user = {}
       localStorage.removeItem(AUTH_LOCAL_TOKEN)
+      localStorage.removeItem(AUTH_LOCAL_USER)
       delete axios.defaults.headers.common['Authorization']
     }
   },
