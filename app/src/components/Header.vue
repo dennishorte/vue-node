@@ -1,8 +1,10 @@
 <template>
 <div class="header">
-  Vue.js With NodeJS
+  Vue Auth Skeleton
   <b-dropdown id="header-dropdown" text="menu">
-    <b-dropdown-item>logout</b-dropdown-item>
+    <b-dropdown-item>
+      <router-link to="/logout">logout</router-link>
+    </b-dropdown-item>
   </b-dropdown>
 </div>
 </template>
@@ -11,19 +13,5 @@
 
 export default {
   name: 'Header',
-  data() {
-    return {
-      menuItems: [
-        {
-          text: 'test',
-          link: '#',
-        },
-        {
-          text: 'link 2',
-          link: '#',
-        },
-      ],
-    }
-  }
 }
 </script>

@@ -21,6 +21,7 @@
     "rules": {}
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "boostrap": "^2.0.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.15.2",

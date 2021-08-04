@@ -38,7 +38,10 @@ export default {
         name: this.name,
         password: this.password,
       }
-      this.$emit('login', payload)
+      this.$store
+        .dispatch('auth/login', payload)
+        .then(() => this.$router.push('/'))
+        .catch(err => console.log(err))
     },
   }
 }
