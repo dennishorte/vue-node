@@ -1,5 +1,4 @@
 import store from '@/store'
-import { AUTH_LOCAL_TOKEN, AUTH_LOCAL_USER } from './consts'
 
 
 function canAccess(routeRecord) {
@@ -15,10 +14,10 @@ function canAccess(routeRecord) {
    If the user has a locally cached auth token, load it up.
  */
 function initialize() {
-  const token = localStorage.getItem(AUTH_LOCAL_TOKEN)
-  const user = localStorage.getItem(AUTH_LOCAL_USER)
-  if (token && user) {
-    store.commit('auth/auth_success', token, user)
+  const token = localStorage.getItem('auth_token')
+
+  if (token) {
+    store.commit('auth/auth_success', token)
   }
 }
 

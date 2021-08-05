@@ -8,6 +8,7 @@ const User = {}
 
 // Database storage!
 const users = []
+User.users = users
 
 
 User.all = async function() {
@@ -69,9 +70,6 @@ User.findByName = async function(name) {
   return await User.findByFunction(user => user.name === name)
 }
 
-User.findByToken = async function(token) {
-  return await User.findByFunction(user => user.token === token)
-}
 
 ////////////////////////////////////////////////////////////
 // User.util

@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-import { AUTH_LOCAL_TOKEN, AUTH_LOCAL_USER } from './consts'
-
 
 export default {
   namespaced: true,
@@ -9,7 +7,6 @@ export default {
   state: () => ({
     status: '',
     token: localStorage.getItem('auth.token') || '',
-    user: {},
   }),
 
   getters : {
@@ -26,21 +23,17 @@ export default {
       state.status = 'loading'
     },
 
-    auth_success(state, token, user) {
+    auth_success(state, token) {
       state.status = 'success'
       state.token = token
-      state.user = user
-      localStorage.setItem(AUTH_LOCAL_TOKEN, token)
-      localStorage.setItem(AUTH_LOCAL_USER, user)
-      axios.defaults.headers.common['Authorization'] = token
+      localStorage.setItem('auth_token', token)
+      axios.defaults.headers.common['Authorization'] = 'bearer ' + token
     },
 
     logout(state) {
       state.status = ''
       state.token = ''
-      state.user = {}
-      localStorage.removeItem(AUTH_LOCAL_TOKEN)
-      localStorage.removeItem(AUTH_LOCAL_USER)
+      localStorage.removeItem('auth_token')
       delete axios.defaults.headers.common['Authorization']
     }
   },
@@ -56,8 +49,7 @@ export default {
         })
           .then(resp => {
             const token = resp.data.token
-            const user = resp.data.user
-            commit('auth_success', token, user)
+            commit('auth_success', token)
             resolve(resp)
           })
           .catch(err => {

@@ -26,16 +26,17 @@ const app = express()
 // after authentication.
 var jwtOpts = {}
 jwtOpts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-jwtOpts.secretOrKey = 'test_secret'
+jwtOpts.secretOrKey = process.env.SECRET_KEY
 passport.use(new JwtStrategy(
   jwtOpts,
-  function(token, cb) {
-    db.user.findByToken(token)
-      .then((err, user) => {
-        if (err) { return cb(err) }
+  function(token_data, cb) {
+    const id = token_data.user.id
+    db.user.findById(id)
+      .then(user => {
         if (!user) { return cb(null, false) }
         return cb(null, user)
       })
+      .catch(err => cb(err))
   }
 ))
 
@@ -49,15 +50,10 @@ passport.use(new JwtStrategy(
    Routes that start with '/api/guest/' do not require authentication.
  */
 app.use((req, res, next)  => {
-  console.log('Middleware!')
-  console.log(req.path)
-
-  if (req.path.startsWith('/api/guest/')) {
-    console.log('guest route')
+  if (req.path.startsWith('/api/guest/') || req.path == '/') {
     next()
   }
   else {
-    console.log('auth route')
     passport.authenticate('jwt', { session: false })(req, res, next)
   }
 })
@@ -68,11 +64,8 @@ app.use(express.static(path.join(__dirname, '../app/dist')))
 ////////////////////////////////////////////////////////////
 // Routes
 
-
-app.get('/api/users', (req, res) => {
-  db.user.all().then(users => {
-    res.json(users)
-  })
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../app/build/index.html'))
 })
 
 
@@ -102,18 +95,10 @@ app.post('/api/guest/login', async (req, res, next) => {
 })
 
 
-app.post(
-  '/api/user',
-  (req, res) => {
-    const user = req.body.user
-    db.user.insert(user.name, user.password, user.slack)
-      .then(() => res.json('insert successful'))
-  }
-)
-
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../app/build/index.html'))
+app.get('/api/users', (req, res) => {
+  db.user.all().then(users => {
+    res.json(users)
+  })
 })
 
 
