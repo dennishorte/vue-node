@@ -50,7 +50,7 @@ export default {
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios({
-          url: '/api/login',
+          url: '/api/guest/login',
           method: 'POST',
           data: user,
         })

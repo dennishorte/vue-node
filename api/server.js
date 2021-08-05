@@ -43,14 +43,30 @@ passport.use(new JwtStrategy(
 ////////////////////////////////////////////////////////////
 // Middleware
 
+
+/*
+   By default, all routes require authentication.
+   Routes that start with '/api/guest/' do not require authentication.
+ */
+app.use((req, res, next)  => {
+  console.log('Middleware!')
+  console.log(req.path)
+
+  if (req.path.startsWith('/api/guest/')) {
+    console.log('guest route')
+    next()
+  }
+  else {
+    console.log('auth route')
+    passport.authenticate('jwt', { session: false })(req, res, next)
+  }
+})
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../app/dist')))
 
 
 ////////////////////////////////////////////////////////////
 // Routes
-
-//  passport.authenticate('jwt', { session: false }),
 
 
 app.get('/api/users', (req, res) => {
@@ -60,7 +76,7 @@ app.get('/api/users', (req, res) => {
 })
 
 
-app.post('/api/login', async (req, res, next) => {
+app.post('/api/guest/login', async (req, res, next) => {
   const users = await db.user.all()
 
   // If there are no users yet, this becomes the admin user.
