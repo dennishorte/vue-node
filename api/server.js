@@ -13,8 +13,8 @@ const port = 3000
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 
-const db = require('./db.js')
-
+const db = require('./src/models/db.js')
+const routes = require('./src/routes.js')
 const app = express()
 
 
@@ -29,14 +29,12 @@ jwtOpts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
 jwtOpts.secretOrKey = process.env.SECRET_KEY
 passport.use(new JwtStrategy(
   jwtOpts,
-  function(token_data, cb) {
-    const id = token_data.user.id
-    db.user.findById(id)
-      .then(user => {
-        if (!user) { return cb(null, false) }
-        return cb(null, user)
-      })
-      .catch(err => cb(err))
+  async function(tokenData, cb) {
+    const id = tokenData.user_id
+    const user = await db.user.findById(id)
+
+    if (!user) { return cb(null, false) }
+    return cb(null, user)
   }
 ))
 
@@ -69,36 +67,12 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/api/guest/login', async (req, res, next) => {
+app.post('/api/guest/login', routes.login)
+
+
+app.get('/api/users', async (req, res) => {
   const users = await db.user.all()
-
-  // If there are no users yet, this becomes the admin user.
-  if (users.length == 0) {
-    const user = await db.user.insert(
-      req.body.name,
-      req.body.password,
-      null,
-    )
-    res.json({ token: user.token })
-  }
-
-  // Otherwise, fetch the user and return its auth token, if the user has valid credentials.
-  else {
-    try {
-      const user = await db.user.checkPassword(req.body.name, req.body.password)
-      res.json({ token: user.token })
-    }
-    catch (err) {
-      res.json({ error: err })
-    }
-  }
-})
-
-
-app.get('/api/users', (req, res) => {
-  db.user.all().then(users => {
-    res.json(users)
-  })
+  res.json(users)
 })
 
 
